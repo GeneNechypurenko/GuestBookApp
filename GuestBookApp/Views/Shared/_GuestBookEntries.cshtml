@@ -1,0 +1,13 @@
+﻿@model IEnumerable<GuestBookApp.Models.Message>
+
+@foreach (var message in Model)
+{
+	<div class="card">
+		<div class="card-top"></div>
+		<div class="card-title">
+			<h5>@message.Username</h5>
+			<h6>posted: @message.PostedAt.ToString("g")</h6>
+		</div>
+		<p class="card-text">@message.Text</p>
+	</div>
+}

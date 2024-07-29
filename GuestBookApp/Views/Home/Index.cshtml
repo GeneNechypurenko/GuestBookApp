@@ -2,37 +2,22 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to the Guest Book</h1>
-
-    @if (Context.Session.GetString("Username") != null)
-    {
-        <form asp-action="AddMessage" method="post">
-            <div class="form-group">
-                <textarea name="Text" class="form-control" placeholder="Enter your message here..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Message</button>
-            <a asp-controller="Account" asp-action="Logout" class="btn btn-secondary">Logout</a>
-        </form>
-    }
-    else
-    {
-        <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Login</a>
-        <a asp-controller="Account" asp-action="Register" class="btn btn-secondary">Register</a>
-    }
+<div id="entries">
+    @await Html.PartialAsync("_GuestBookEntries", Model)
 </div>
 
-<hr />
+<div id="login">
 
-@foreach (var message in Model)
-{
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">@message.Username</h5>
-            <p class="card-text">@message.Text</p>
-            <p class="card-text"><small class="text-muted">@message.PostedAt</small></p>
-        </div>
-    </div>
+</div>
+
+<div id="registration">
+
+</div>
+
+@section Scripts {
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/site.js"></script>
 }

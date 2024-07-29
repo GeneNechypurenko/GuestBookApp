@@ -14,9 +14,6 @@ namespace GuestBookApp.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
-        public IActionResult Login() => View();
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -26,17 +23,14 @@ namespace GuestBookApp.Controllers
                 if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
                 {
                     HttpContext.Session.SetString("Username", user.Username);
-                    return RedirectToAction("Index", "Home");
+                    return Ok(); // Return status 200 for success
                 }
 
                 ModelState.AddModelError("", "Invalid username or password.");
             }
 
-            return View(model);
+            return BadRequest(ModelState);
         }
-
-        [HttpGet]
-        public IActionResult Register() => View();
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -53,20 +47,20 @@ namespace GuestBookApp.Controllers
                     };
 
                     await _userRepository.AddUserAsync(user);
-                    return RedirectToAction("Login");
+                    return Ok(); // Return status 200 for success
                 }
 
                 ModelState.AddModelError("", "Username already exists.");
             }
 
-            return View(model);
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return Ok(); // Return status 200 for success
         }
     }
 }

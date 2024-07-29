@@ -2,7 +2,6 @@ using GuestBookApp.Models;
 using GuestBookApp.Models.ViewModels;
 using GuestBookApp.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace GuestBookApp.Controllers
 {
@@ -22,6 +21,13 @@ namespace GuestBookApp.Controllers
             return View(messages);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetMessages()
+        {
+            var messages = await _messageRepository.GetMessagesAsync();
+            return PartialView("_GuestBookEntries", messages);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddMessage(MessageViewModel model)
         {
@@ -38,10 +44,12 @@ namespace GuestBookApp.Controllers
                     };
 
                     await _messageRepository.AddMessageAsync(message);
+                    var messages = await _messageRepository.GetMessagesAsync();
+                    return PartialView("_GuestBookEntries", messages);
                 }
             }
 
-            return RedirectToAction("Index");
+            return BadRequest(ModelState);
         }
     }
 }
