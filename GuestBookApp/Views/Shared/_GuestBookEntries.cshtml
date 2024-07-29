@@ -2,12 +2,37 @@
 
 @foreach (var message in Model)
 {
-	<div class="card">
-		<div class="card-top"></div>
-		<div class="card-title">
-			<h5>@message.Username</h5>
-			<h6>posted: @message.PostedAt.ToString("g")</h6>
+	@if (Model.First() == message)
+	{
+		<div class="card" style="border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+			<div class="card-top"></div>
+			<div class="card-title">
+				<h5>@message.Username</h5>
+				<h6>posted: @message.PostedAt.ToString("g")</h6>
+			</div>
+			<p class="card-text">@message.Text</p>
 		</div>
-		<p class="card-text">@message.Text</p>
-	</div>
+	}
+	else if (Model.First() != message && Model.Last() != message)
+	{
+		<div class="card">
+			<div class="card-top"></div>
+			<div class="card-title">
+				<h5>@message.Username</h5>
+				<h6>posted: @message.PostedAt.ToString("g")</h6>
+			</div>
+			<p class="card-text">@message.Text</p>
+		</div>
+	}
+	else
+	{
+		<div class="card" style="border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;">
+			<div class="card-top"></div>
+			<div class="card-title">
+				<h5>@message.Username</h5>
+				<h6>posted: @message.PostedAt.ToString("g")</h6>
+			</div>
+			<p class="card-text">@message.Text</p>
+		</div>
+	}
 }
