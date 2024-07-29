@@ -5,7 +5,6 @@
 }
 
 body {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -19,7 +18,7 @@ body {
 }
 
 header {
-    height: 5%;
+    height: 50px;
     width: 100%;
     background: #265284;
     border-bottom-left-radius: 1rem;
@@ -54,6 +53,7 @@ header {
 
 .header-container {
     height: 100%;
+    max-height: calc(100vh - 100px);
     width: 100%;
     margin: 0;
     display: flex;
@@ -100,16 +100,29 @@ header {
     padding-right: 20px;
 }
 
+.greeting {
+    height: 100%;
+    width: auto;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 0;
+    margin-right: 20px;
+}
+
 .container {
-    margin: auto;
     height: auto;
-    width: 40%;
-    background: #ccc;
-    border-radius: 1rem;
-    background: #ffffff20;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 .5rem 1rem #11111190;
-    border: 1px solid #ffffff50;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 #entries {
@@ -187,9 +200,16 @@ header {
     margin: 20px;
 }
 
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
 .modal-content {
     height: 50vh;
-    width: 20vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -233,7 +253,8 @@ header {
     }
 
 #loginForm,
-#registerForm {
+#registerForm,
+#guestBookForm {
     height: 100%;
     width: 100%;
     display: flex;
@@ -263,7 +284,7 @@ header {
 
 .text-danger {
     height: auto;
-    width: 60%;
+    width: auto;
     text-align: center;
     color: #dc3545;
     font-weight: bold;
@@ -272,4 +293,16 @@ header {
 .btn {
     height: auto;
     width: 6rem;
+}
+
+.form-textarea {
+    height: 280px;
+    width: 400px;
+    border-radius: .2rem;
+    resize: none;
+    margin: auto;
+    display: flex;
+    align-content: center;
+    justify-content:center;
+    padding: 1rem;
 }

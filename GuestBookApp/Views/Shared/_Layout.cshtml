@@ -1,75 +1,92 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GuestBookApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MusicLibraryApp.styles.css" asp-append-version="true" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - GuestBookApp</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <section>
-            <h2 class="header-title">Guest Book</h2>
-        </section>
-        <section>
-            <div class="header-container">
-                @if (string.IsNullOrEmpty(@Context.Session.GetString("Username")))
-                {
-                    <a href="#" class="link-l" id="loginLink">Log In</a>
-                    <a href="#" class="link-r" id="registerLink">Sign Up</a>
-                }
-                else
-                {
-                    <p class="greeting">Welcome, @Context.Session.GetString("Username")</p>
-                    <a class="link-r" asp-controller="Account" asp-action="Logout">Log Out</a>
-                }
-            </div>
-        </section>
-    </header>
+	<header>
+		<section>
+			<h2 class="header-title">Guest Book</h2>
+		</section>
+		<section>
+			<div class="header-container">
+				@if (string.IsNullOrEmpty(@Context.Session.GetString("Username")))
+				{
+					<a href="#" id="loginLink" class="link-l">Log In</a>
+					<a href="#" id="registerLink" class="link-r">Sign Up</a>
+				}
+				else
+				{
+					<p class="greeting">Welcome, @Context.Session.GetString("Username")</p>
+					<a href="#" id="feedbackLink" class="link-l">Leave Feedback</a>
+					<a href="#" id="logoutLink" class="link-r">Log Out</a>
+				}
+			</div>
+		</section>
+	</header>
 
-    <div class="container">
-        @RenderBody()
-    </div>
+	<div class="container">
+		@RenderBody()
+	</div>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Log In</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @await Html.PartialAsync("_LoginPartial", new GuestBookApp.Models.ViewModels.LoginViewModel())
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Login Modal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalLabel">Log In</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					@await Html.PartialAsync("_LoginPartial", new GuestBookApp.Models.ViewModels.LoginViewModel())
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Sign Up</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @await Html.PartialAsync("_RegisterPartial", new GuestBookApp.Models.ViewModels.RegisterViewModel())
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Register Modal -->
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="registerModalLabel">Sign Up</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					@await Html.PartialAsync("_RegisterPartial", new GuestBookApp.Models.ViewModels.RegisterViewModel())
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<!-- Feedback Modal -->
+	<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="feedbackModalLabel">Leave Feedback</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					@await Html.PartialAsync("_FeedbackPartial", new GuestBookApp.Models.ViewModels.MessageViewModel())
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

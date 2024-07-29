@@ -21,35 +21,30 @@ namespace GuestBookApp.Controllers
             return View(messages);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMessages()
-        {
-            var messages = await _messageRepository.GetMessagesAsync();
-            return PartialView("_GuestBookEntries", messages);
-        }
+		[HttpPost]
+		public async Task<IActionResult> AddMessage(MessageViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var message = new Message
+				{
+					Text = model.Text,
+					Username = HttpContext.Session.GetString("Username"),
+					PostedAt = DateTime.Now
+				};
 
-        [HttpPost]
-        public async Task<IActionResult> AddMessage(MessageViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var username = HttpContext.Session.GetString("Username");
-                if (!string.IsNullOrEmpty(username))
-                {
-                    var message = new Message
-                    {
-                        Username = username,
-                        Text = model.Text,
-                        PostedAt = DateTime.Now
-                    };
+				await _messageRepository.AddMessageAsync(message);
+				return Ok();
+			}
 
-                    await _messageRepository.AddMessageAsync(message);
-                    var messages = await _messageRepository.GetMessagesAsync();
-                    return PartialView("_GuestBookEntries", messages);
-                }
-            }
+			return BadRequest(ModelState);
+		}
 
-            return BadRequest(ModelState);
-        }
-    }
+		[HttpGet]
+		public async Task<IActionResult> PartialGuestBookEntries()
+		{
+			var messages = await _messageRepository.GetMessagesAsync();
+			return PartialView("_GuestBookEntries", messages);
+		}
+	}
 }

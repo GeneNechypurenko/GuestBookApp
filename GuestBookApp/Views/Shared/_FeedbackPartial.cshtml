@@ -1,0 +1,8 @@
+﻿@model GuestBookApp.Models.ViewModels.MessageViewModel
+
+<form id="guestBookForm" asp-action="AddMessage" method="post">
+
+        <textarea name="Text" asp-for="Text" class="form-textarea" placeholder="Enter your message here..."></textarea>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form>

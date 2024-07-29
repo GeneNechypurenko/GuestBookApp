@@ -15,21 +15,10 @@ namespace GuestBookApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await _userRepository.GetUserByUsernameAsync(model.Username);
-                if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
-                {
-                    HttpContext.Session.SetString("Username", user.Username);
-                    return Ok(); // Return status 200 for success
-                }
-
-                ModelState.AddModelError("", "Invalid username or password.");
-            }
-
-            return BadRequest(ModelState);
+            HttpContext.Session.SetString("Username", model.Username);
+            return Ok();
         }
 
         [HttpPost]
@@ -47,7 +36,7 @@ namespace GuestBookApp.Controllers
                     };
 
                     await _userRepository.AddUserAsync(user);
-                    return Ok(); // Return status 200 for success
+                    return Ok();
                 }
 
                 ModelState.AddModelError("", "Username already exists.");
@@ -60,7 +49,7 @@ namespace GuestBookApp.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return Ok(); // Return status 200 for success
+            return Ok();
         }
     }
 }
