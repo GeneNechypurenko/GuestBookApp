@@ -50,8 +50,8 @@ namespace GuestBookApp.Controllers
 		[HttpPost]
 		public IActionResult Logout()
 		{
-			HttpContext.Session.Clear();
-			return Ok();
+            HttpContext.Session.Remove("Username");
+            return Ok();
 		}
 	}
 }

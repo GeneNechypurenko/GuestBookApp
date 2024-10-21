@@ -29,7 +29,7 @@ namespace GuestBookApp.Controllers
 				var message = new Message
 				{
 					Text = model.Text,
-					Username = HttpContext.Session.GetString("Username"),
+					Username = HttpContext.Session.GetString("Username")!,
 					PostedAt = DateTime.Now
 				};
 
